@@ -1,7 +1,9 @@
+import type { Address, Hash } from 'viem';
+
 export type { Deposit } from './db';
 
 export type CreateDepositRequest = {
-	destinationAddress: `0x${string}`;
+	destinationAddress: Address;
 	amount: string;
 	nonce?: number;
 };
@@ -9,15 +11,15 @@ export type CreateDepositRequest = {
 export type CreateDepositResponse = {
 	index: number;
 	nonce: number;
-	depositAddress: `0x${string}`;
-	destinationAddress: `0x${string}`;
+	depositAddress: Address;
+	destinationAddress: Address;
 };
 
 export type DepositStatus = 'waiting' | 'confirming' | 'confirmed' | 'failed';
 
 export type DepositStatusResponse = {
 	amount?: string;
-	txHash?: `0x${string}`;
+	txHash?: Hash;
 	confirmations?: number;
 	status: DepositStatus;
 };
@@ -26,7 +28,7 @@ export type PayoutStatus = 'pending' | 'sent' | 'failed';
 
 export type PayoutResponse = {
 	status: PayoutStatus;
-	txHash?: `0x${string}`;
+	txHash?: Hash;
 	amount?: string;
 	fee?: string;
 };

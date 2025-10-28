@@ -1,19 +1,20 @@
+import type { Address, Hash } from 'viem';
 import type { DepositStatus, PayoutStatus } from './index';
 
 export type Deposit = {
 	id: string;
-	depositAddress: `0x${string}`;
-	destinationAddress: `0x${string}`;
+	depositAddress: Address;
+	destinationAddress: Address;
 	index: number;
 	nonce: number; // (NOT nullable - defaults to 0)
 
 	depositStatus: DepositStatus;
-	depositTxHash?: `0x${string}`;
+	depositTxHash?: Hash;
 	depositBlockNumber?: number;
 	depositAmount?: string;
 
 	payoutStatus: PayoutStatus;
-	payoutTxHash?: `0x${string}`;
+	payoutTxHash?: Hash;
 	payoutAmount?: string;
 	fee?: string;
 
