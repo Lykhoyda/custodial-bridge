@@ -1,15 +1,14 @@
 {
-  "name": "shared",
+  "name": "@bridge/shared",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "test": "vitest",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+  "main": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
   },
   "devDependencies": {
+    "@types/node": "^24.9.1",
     "@vitest/ui": "^4.0.4",
     "typescript": "~5.9.3",
     "vite": "^7.1.7",
@@ -17,6 +16,7 @@
   },
   "dependencies": {
     "@noble/secp256k1": "^3.0.0",
+    "@supabase/supabase-js": "^2.76.1",
     "viem": "^2.38.4"
   }
 }
