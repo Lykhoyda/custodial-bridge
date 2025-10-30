@@ -40,6 +40,7 @@ export type Database = {
           deposit_address: string
           deposit_amount: string
           deposit_block_number: number | null
+          deposit_created_block_number: number | null
           deposit_error: string | null
           deposit_status: string
           deposit_tx_hash: string | null
@@ -59,6 +60,7 @@ export type Database = {
           deposit_address: string
           deposit_amount: string
           deposit_block_number?: number | null
+          deposit_created_block_number?: number | null
           deposit_error?: string | null
           deposit_status?: string
           deposit_tx_hash?: string | null
@@ -78,6 +80,7 @@ export type Database = {
           deposit_address?: string
           deposit_amount?: string
           deposit_block_number?: number | null
+          deposit_created_block_number?: number | null
           deposit_error?: string | null
           deposit_status?: string
           deposit_tx_hash?: string | null

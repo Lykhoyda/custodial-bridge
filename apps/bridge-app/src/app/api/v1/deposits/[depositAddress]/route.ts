@@ -1,0 +1,44 @@
+import {
+	type DepositStatus,
+	type DepositsApiResponse,
+	type PayoutStatus,
+	supabase
+} from '@bridge/shared';
+import { type NextRequest, NextResponse } from 'next/server';
+import type { Hash } from 'viem';
+
+export async function GET(
+	request: NextRequest,
+	{ params }: { params: { depositAddress: string } }
+) {
+	try {
+		const { depositAddress } = params;
+		const { data, error } = await supabase
+			.from('deposits')
+			.select('*')
+			.eq('deposit_address', depositAddress)
+			.single();
+
+		if (error || !data) {
+			return NextResponse.json({ error: 'Deposit not found' }, { status: 404 });
+		}
+
+		return NextResponse.json<DepositsApiResponse>({
+			payout: {
+				status: data.payout_status as PayoutStatus,
+				txHash: (data.payout_tx_hash as Hash) ?? undefined,
+				amount: data.payout_amount ?? undefined,
+				fee: data.fee ?? undefined
+			},
+			deposit: {
+				amount: data.deposit_amount,
+				txHash: (data.deposit_tx_hash as Hash) ?? undefined,
+				status: data.deposit_status as DepositStatus,
+				blockNumber: data.deposit_block_number ?? undefined
+			}
+		});
+	} catch (error) {
+		console.error('Error fetching deposit:', error);
+		return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+	}
+}

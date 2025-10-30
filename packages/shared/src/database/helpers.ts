@@ -1,5 +1,5 @@
 import type { Address, Hash } from 'viem';
-import { supabase } from './client.ts';
+import { supabase } from './client';
 import type { Database } from './database.types.ts';
 
 type Deposit = Database['public']['Tables']['deposits']['Row'];
@@ -10,6 +10,7 @@ type CreateDepositParams = {
 	nonce: number;
 	index: number;
 	deposit_address: Address;
+	depositCreatedBlockNumber: number;
 };
 
 async function createDeposit({
@@ -17,7 +18,8 @@ async function createDeposit({
 	deposit_address,
 	amount,
 	nonce,
-	index
+	index,
+	depositCreatedBlockNumber
 }: CreateDepositParams): Promise<string> {
 	const { data, error } = await supabase
 		.from('deposits')
@@ -26,6 +28,7 @@ async function createDeposit({
 			destination_address,
 			index,
 			nonce,
+			deposit_created_block_number: depositCreatedBlockNumber,
 			deposit_status: 'waiting',
 			deposit_amount: amount,
 			payout_status: 'pending'

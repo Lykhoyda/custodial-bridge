@@ -1,7 +1,5 @@
 import type { Address, Hash } from 'viem';
 
-export type { Deposit } from './db';
-
 export type CreateDepositRequest = {
 	destinationAddress: Address;
 	amount: string;
@@ -20,7 +18,7 @@ export type DepositStatus = 'waiting' | 'confirming' | 'confirmed' | 'failed';
 export type DepositStatusResponse = {
 	amount?: string;
 	txHash?: Hash;
-	confirmations?: number;
+	blockNumber?: number;
 	status: DepositStatus;
 };
 

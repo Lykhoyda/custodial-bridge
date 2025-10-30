@@ -18,11 +18,4 @@ export {
 } from './hd-wallet';
 
 // From types
-export type {
-	CreateDepositRequest,
-	CreateDepositResponse,
-	Deposit,
-	DepositStatus,
-	DepositsApiResponse,
-	PayoutStatus
-} from './types';
+export * from './types';

@@ -13,6 +13,8 @@ CREATE TABLE IF NOT EXISTS deposits
     deposit_tx_hash      varchar(66)  NULL,
     deposit_block_number integer      NULL,
     deposit_amount       varchar(255) NOT NULL,
+    deposit_created_block_number integer NULL,
+
 
     payout_status        text         NOT NULL
         CHECK (payout_status IN ('pending', 'sent', 'failed'))

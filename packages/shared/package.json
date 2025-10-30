@@ -11,12 +11,15 @@
     "@types/node": "^24.9.1",
     "@vitest/ui": "^4.0.4",
     "typescript": "~5.9.3",
+    "viem": "2.38.5",
     "vite": "^7.1.7",
     "vitest": "^4.0.4"
   },
   "dependencies": {
     "@noble/secp256k1": "^3.0.0",
-    "@supabase/supabase-js": "^2.76.1",
-    "viem": "^2.38.4"
+    "@supabase/supabase-js": "^2.76.1"
+  },
+  "peerDependencies": {
+    "viem": "^2.38.5"
   }
 }

@@ -1,6 +1,7 @@
 import * as secp from '@noble/secp256k1';
 import { mnemonicToSeedSync } from '@scure/bip39';
 import {
+	type Address,
 	bytesToHex,
 	getAddress,
 	type HDAccount,
@@ -21,7 +22,7 @@ export function calculateIndex(destinationAddress: string, nonce: number): numbe
 export function deriveDepositAddress(
 	mnemonic: string,
 	index: number
-): { address: string; account: HDAccount } {
+): { address: Address; account: HDAccount } {
 	const account = mnemonicToAccount(mnemonic, {
 		accountIndex: 0,
 		changeIndex: 0,
