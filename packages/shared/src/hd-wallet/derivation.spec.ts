@@ -7,7 +7,7 @@ describe('derivation', () => {
 
 	describe('calculateIndex', () => {
 		test('it calculates the same index for the same outputs', () => {
-			const address = '0x1234567890abcdef1234567890abcdef12345678';
+			const address = '0x9a5c142ffdbddfcc7b909104f1191d8e3cc44e90';
 			const nonce = 5;
 			const index1 = calculateIndex(address, nonce);
 			const index2 = calculateIndex(address, nonce);

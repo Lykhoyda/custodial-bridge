@@ -1,8 +1,6 @@
-import type { Address, Hash } from 'viem';
-import { supabase } from './client';
+import type { SupabaseClient } from '@supabase/supabase-js';
+import type { Address } from 'viem';
 import type { Database } from './database.types.ts';
-
-type Deposit = Database['public']['Tables']['deposits']['Row'];
 
 type CreateDepositParams = {
 	destination_address: Address;
@@ -13,14 +11,17 @@ type CreateDepositParams = {
 	depositCreatedBlockNumber: number;
 };
 
-async function createDeposit({
-	destination_address,
-	deposit_address,
-	amount,
-	nonce,
-	index,
-	depositCreatedBlockNumber
-}: CreateDepositParams): Promise<string> {
+async function createDeposit(
+	supabase: SupabaseClient<Database>,
+	{
+		destination_address,
+		deposit_address,
+		amount,
+		nonce,
+		index,
+		depositCreatedBlockNumber
+	}: CreateDepositParams
+): Promise<string> {
 	const { data, error } = await supabase
 		.from('deposits')
 		.insert({
@@ -41,51 +42,4 @@ async function createDeposit({
 	return data[0].id;
 }
 
-async function getUnprocessedDeposits(): Promise<Deposit[]> {
-	const { data, error } = await supabase
-		.from('deposits')
-		.select('*')
-		.eq('deposit_status', 'confirmed')
-		.eq('payout_status', 'pending')
-		.is('payout_tx_hash', null);
-
-	if (error) throw error;
-	if (!data) throw new Error('Failed to fetch unprocessed deposits');
-
-	return data;
-}
-
-async function markAsProcessing(depositId: string): Promise<boolean> {
-	const { data, error } = await supabase.rpc('claim_deposit_for_processing', {
-		deposit_id: depositId
-	});
-
-	if (error) throw error;
-	return data as boolean;
-}
-
-async function recordPayoutHash(depositId: string, txHash: Hash): Promise<void> {
-	const { error } = await supabase
-		.from('deposits')
-		.update({ payout_tx_hash: txHash, updated_at: new Date().toISOString() })
-		.eq('id', depositId);
-
-	if (error) throw error;
-}
-
-async function markPayoutSent(depositId: string): Promise<void> {
-	const { error } = await supabase
-		.from('deposits')
-		.update({ payout_status: 'sent', updated_at: new Date().toISOString() })
-		.eq('id', depositId);
-
-	if (error) throw error;
-}
-
-export {
-	createDeposit,
-	getUnprocessedDeposits,
-	markAsProcessing,
-	recordPayoutHash,
-	markPayoutSent
-};
+export { createDeposit };

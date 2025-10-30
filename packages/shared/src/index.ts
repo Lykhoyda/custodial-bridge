@@ -1,12 +1,8 @@
 // From database
 export {
+	createDbClient,
 	createDeposit,
-	type Database,
-	getUnprocessedDeposits,
-	markAsProcessing,
-	markPayoutSent,
-	recordPayoutHash,
-	supabase
+	type Database
 } from './database';
 
 // From hd-wallet

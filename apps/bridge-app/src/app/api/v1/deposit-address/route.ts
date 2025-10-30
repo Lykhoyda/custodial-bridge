@@ -3,6 +3,7 @@ import { calculateIndex, createDeposit, deriveDepositAddress } from '@bridge/sha
 import { type NextRequest, NextResponse } from 'next/server';
 import { createPublicClient, http } from 'viem';
 import { baseSepolia } from 'viem/chains';
+import { supabase } from '@/config/db';
 
 const baseClient = createPublicClient({
 	chain: baseSepolia,
@@ -21,7 +22,7 @@ export async function POST(request: NextRequest) {
 		const { address: depositAddress } = deriveDepositAddress(mnemonic, index);
 		const currentBlock = await baseClient.getBlockNumber();
 
-		await createDeposit({
+		await createDeposit(supabase, {
 			deposit_address: depositAddress,
 			destination_address: body.destinationAddress,
 			amount: body.amount,

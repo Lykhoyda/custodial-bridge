@@ -10,6 +10,8 @@ export const config = {
 	baseRpcUrl: getEnvVar('BASE_RPC_URL'),
 	arbitrumRpcUrl: getEnvVar('ARBITRUM_RPC_URL'),
 	mnemonic: getEnvVar('BRIDGE_MNEMONIC'),
+	supabaseUrl: getEnvVar('SUPABASE_URL'),
+	supabaseAnonKey: getEnvVar('SUPABASE_ANON_KEY'),
 	requiredConfirmations: Number(process.env.REQUIRED_CONFIRMATIONS || 7),
 	pollInterval: Number(process.env.POLL_INTERVAL_MS || 10000)
 };

@@ -16,7 +16,7 @@ export function calculateIndex(destinationAddress: string, nonce: number): numbe
 	const combined = `${destinationAddress.toLowerCase()}-${nonce.toString()}`;
 	const hash = keccak256(toBytes(combined));
 
-	return hexToNumber(hash.slice(0, 10) as Hex); // take first 4 bytes (0x + 4 pairs)
+	return hexToNumber(hash.slice(0, 8) as Hex); // take first 3 bytes (0x + 3 pairs)
 }
 
 export function deriveDepositAddress(

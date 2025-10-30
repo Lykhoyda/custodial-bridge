@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS deposits
                                                DEFAULT 0,
 
     deposit_status       text         NOT NULL
-        CHECK (deposit_status IN ('waiting', 'confirming', 'confirmed', 'failed'))
+        CHECK (deposit_status IN ('waiting', 'confirming', 'confirmed', 'processing', 'failed'))
                                                DEFAULT 'waiting',
     deposit_tx_hash      varchar(66)  NULL,
     deposit_block_number integer      NULL,
