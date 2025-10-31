@@ -231,6 +231,10 @@ yarn dev
 ## Testing the Flow
 
 
+https://github.com/user-attachments/assets/3c0def89-5597-4a80-98cd-6e0285464df0
+
+
+
 ## Known Limitations
 
 This is an MVP implementation demonstrating core concepts. The following limitations are known and would need addressing for production use:
