@@ -13,3 +13,4 @@ yarn-error.log*
 
 # Env
 .env
+!.env.example*

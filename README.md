@@ -153,33 +153,30 @@ Create `.env.local` files:
 **apps/bridge-app/.env.local** (API & Frontend)
 ```bash
 # Database
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+SUPABASE_URL=http://127.0.0.1:54321
+SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 
 # Bridge Configuration
 BRIDGE_MNEMONIC="your twelve word mnemonic phrase here"
 BASE_RPC_URL=https://base-sepolia.g.alchemy.com/v2/YOUR-KEY
 ARBITRUM_RPC_URL=https://arb-sepolia.g.alchemy.com/v2/YOUR-KEY
 
-# Frontend Verification
-NEXT_PUBLIC_BRIDGE_XPUB="xpub6C..." # Derive from your mnemonic
+# Frontend Verification 
+# Derive from your mnemonic can be generated using script ./scripts/generate-xpub.ts
+NEXT_PUBLIC_BRIDGE_XPUB="xpub6C..." 
 ```
 
 **apps/watcher/.env** (Watcher Service)
 ```bash
-# Database
-SUPABASE_URL=https://your-project.supabase.co
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+SUPABASE_URL=your-supabase-url
+SUPABASE_ANON_KEY=your-anon-key
+BRIDGE_MNEMONIC=your-mnemonic
 
-# Bridge Configuration
-BRIDGE_MNEMONIC="your twelve word mnemonic phrase here"
-BASE_RPC_URL=https://base-sepolia.g.alchemy.com/v2/YOUR-KEY
-ARBITRUM_RPC_URL=https://arb-sepolia.g.alchemy.com/v2/YOUR-KEY
+BASE_RPC_URL=https://sepolia.base.org # Base Sepolia testnet
+ARBITRUM_RPC_URL=https://sepolia-rollup.arbitrum.io/rpc # Arbitrum Sepolia
 
-# Watcher Settings
 REQUIRED_CONFIRMATIONS=7
-POLL_INTERVAL=10000  # 10 seconds
+POLL_INTERVAL_MS=10000# seconds between checks
 ```
 
 ### 3. Generate Extended Public Key (xpub)
