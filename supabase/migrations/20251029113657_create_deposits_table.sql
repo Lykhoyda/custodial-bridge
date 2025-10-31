@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS deposits
 (
     id                   UUID PRIMARY KEY      DEFAULT gen_random_uuid(),
-    deposit_address      varchar(42)  NOT NULL,
+    deposit_address      varchar(42)  NOT NULL UNIQUE,
     destination_address  varchar(42)  NOT NULL,
     index                integer      NOT NULL,
     nonce                integer      NOT NULL
@@ -27,5 +27,9 @@ CREATE TABLE IF NOT EXISTS deposits
     payout_error         varchar(255) NULL,
 
     created_at           timestamptz  NOT NULL DEFAULT NOW(),
-    updated_at           timestamptz  NOT NULL DEFAULT NOW()
+    updated_at           timestamptz  NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT unique_destination_nonce UNIQUE (destination_address, nonce)
 );
+
+

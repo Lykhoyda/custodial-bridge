@@ -13,6 +13,7 @@ interface CreateDepositFormProps {
 	setNonce: (value: string) => void;
 	handleSubmit: () => Promise<void>;
 	isSubmitting: boolean;
+	apiError: string | null;
 }
 
 export function CreateDepositForm({
@@ -23,7 +24,8 @@ export function CreateDepositForm({
 	setAmount,
 	setNonce,
 	handleSubmit,
-	isSubmitting
+	isSubmitting,
+	apiError
 }: CreateDepositFormProps) {
 	return (
 		<Card className="h-fit">
@@ -75,7 +77,11 @@ export function CreateDepositForm({
 						Use different nonces for multiple deposit addresses
 					</p>
 				</div>
-
+				{apiError && (
+					<div className="rounded-lg bg-red-50 p-3 border border-red-200">
+						<p className="text-sm text-red-800">{apiError}</p>
+					</div>
+				)}
 				<Button
 					onClick={handleSubmit}
 					disabled={!destinationAddress || !amount || isSubmitting}

@@ -21,6 +21,7 @@ interface UseCreateDepositFormReturn {
 	depositAddress: string | null;
 	isVerified: boolean | null;
 	verificationError: string | null;
+	apiError: string | null;
 
 	// Reset
 	reset: () => void;
@@ -35,11 +36,13 @@ export function useCreateDepositForm(): UseCreateDepositFormReturn {
 	const [isVerified, setIsVerified] = useState<boolean | null>(null);
 	const [verificationError, setVerificationError] = useState<string | null>(null);
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [apiError, setApiError] = useState<string | null>(null);
 
 	const handleSubmit = async () => {
 		try {
 			setIsSubmitting(true);
 			setVerificationError(null);
+			setApiError(null);
 
 			const parsedNonce = nonce ? Number(nonce) : 0;
 			if (Number.isNaN(parsedNonce)) {
@@ -59,7 +62,8 @@ export function useCreateDepositForm(): UseCreateDepositFormReturn {
 
 			if (!response.ok) {
 				const errorData = await response.json().catch(() => ({}));
-				throw new Error(errorData.message || 'Failed to generate deposit address');
+				setApiError(errorData.error || 'Failed to generate deposit address');
+				throw new Error(errorData.error || 'Failed to generate deposit address');
 			}
 
 			const data = await response.json();
@@ -90,9 +94,11 @@ export function useCreateDepositForm(): UseCreateDepositFormReturn {
 		setDepositAddress(null);
 		setIsVerified(null);
 		setVerificationError(null);
+		setApiError(null);
 	};
 
 	return {
+		apiError,
 		destinationAddress,
 		amount,
 		nonce,

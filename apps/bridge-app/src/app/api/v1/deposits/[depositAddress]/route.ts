@@ -1,7 +1,7 @@
 import type { DepositStatus, DepositsApiResponse, PayoutStatus } from '@bridge/shared';
 import { createDbClient } from '@bridge/shared';
 import { type NextRequest, NextResponse } from 'next/server';
-import type { Hash } from 'viem';
+import { getAddress, type Hash } from 'viem';
 
 if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) {
 	throw new Error('Supabase environment variables are not set');
@@ -11,14 +11,16 @@ const supabase = createDbClient(process.env.SUPABASE_URL, process.env.SUPABASE_A
 
 export async function GET(
 	request: NextRequest,
-	{ params }: { params: { depositAddress: string } }
+	{ params }: { params: Promise<{ depositAddress: string }> }
 ) {
 	try {
 		const { depositAddress } = await params;
+		const normalizedAddress = getAddress(depositAddress);
+
 		const { data, error } = await supabase
 			.from('deposits')
 			.select('*')
-			.eq('deposit_address', depositAddress)
+			.eq('deposit_address', normalizedAddress)
 			.single();
 
 		if (error || !data) {
